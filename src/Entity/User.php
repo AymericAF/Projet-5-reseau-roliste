@@ -5,9 +5,18 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(
+ *      fields={"username"},
+ *      message="Ce nom d'utilisateur est déjà utilisé, veuillez en saisir un autre."
+ * )
+ * @UniqueEntity(
+ *      fields={"email"},
+ *      message="Cette adresse email est déjà enregistrée."
+ * )
  */
 class User implements UserInterface
 {
@@ -19,8 +28,9 @@ class User implements UserInterface
     private $id;
 
     /**  
-     * @Assert\Length(min = 3, minMessage = "Votre nom d'utilisateur est trop court, veuillez saisir un minimum de 3 caractères.")
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank(message = "Vous devez indiquer un nom d'utilisateur valide.")
+     * @Assert\Length(min = 3, minMessage = "Votre nom d'utilisateur est trop court, veuillez saisir un minimum de 3 caractères.")
      */
     private $username;
 
@@ -32,6 +42,7 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     private $password;
 
@@ -42,6 +53,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $country;
 
@@ -52,6 +64,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $city;
 
@@ -62,6 +75,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message = "Vous devez indiquer une adresse mail valide.")
      */
     private $email;
 
@@ -72,13 +86,13 @@ class User implements UserInterface
 
     /**
      * A visual identifier that represents this user.
-     *
      * @see UserInterface
      */
     public function getUsername(): string
     {
         return (string) $this->username;
     }
+
 
     public function setUsername(string $username): self
     {

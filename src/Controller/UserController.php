@@ -35,7 +35,7 @@ class UserController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
             $user->setCreatedAt(new \DateTime());
-            $user->setRoles(['user']);
+            $user->setRoles(['ROLE_USER']);
             $passwordEncoded = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($passwordEncoded);
             $manager->persist($user);
@@ -43,7 +43,6 @@ class UserController extends AbstractController
 
             return $this->redirectToRoute('registration');
         }
-
 
         return $this->render('user/registration.html.twig', [
             'form' => $form->createView(),
