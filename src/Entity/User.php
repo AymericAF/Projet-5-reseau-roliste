@@ -29,7 +29,6 @@ class User implements UserInterface
 
     /**  
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\NotBlank(message = "Vous devez indiquer un nom d'utilisateur valide.")
      * @Assert\Length(min = 3, minMessage = "Votre nom d'utilisateur est trop court, veuillez saisir un minimum de 3 caractères.")
      */
     private $username;
@@ -75,9 +74,19 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message = "Vous devez indiquer une adresse mail valide.")
+     * @Assert\NotBlank(message="Vous devez indiquer une adresse mail valide.")
      */
     private $email;
+
+    /**
+     * @ORM\Column(type="decimal", precision=9, scale=6)
+     */
+    private $gpsLat;
+
+    /**
+     * @ORM\Column(type="decimal", precision=9, scale=6)
+     */
+    private $gpsLong;
 
     public function getId(): ?int
     {
@@ -220,6 +229,30 @@ class User implements UserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getGpsLat()
+    {
+        return $this->gpsLat;
+    }
+
+    public function setGpsLat($gpsLat): self
+    {
+        $this->gpsLat = $gpsLat;
+
+        return $this;
+    }
+
+    public function getGpsLong()
+    {
+        return $this->gpsLong;
+    }
+
+    public function setGpsLong($gpsLong): self
+    {
+        $this->gpsLong = $gpsLong;
 
         return $this;
     }
