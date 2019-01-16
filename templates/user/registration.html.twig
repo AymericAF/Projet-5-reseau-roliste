@@ -1,8 +1,9 @@
 {% extends 'base.html.twig' %}
-
+    
 {% block body %}
+
     <h1>Formulaire d'inscription</h1>
-    {{ form_start(form, {'attr' : {'novalidate' : 'novalidate'}}) }}
+    {{ form_start(form) }}
     <div class="form-group">
         <label for="">Nom d'utilisateur : </label>
         {{ form_widget(form.username) }}
@@ -35,19 +36,51 @@
         {{ form_errors(form.password.first)}}
     </div>
 
+        <form>
+
+    <input id="street_number" name="street_number" disabled>
+    <label>route</label>
+    <input id="route" name="route" disabled>
+    <label>locality</label>
+    <input id="locality" name="locality" disabled>
+    <label>country</label>
+    <input id="country" name="country" disabled>
+    </form>
+
+    <div class="form-group">
+        <label for="user_input_autocomplete_address">Saisissez votre adresse</label>
+        <input type="text" id="user_input_autocomplete_address" placeholder="Votre adresse">
+    </div>
+
+    <input type="text" id="search">
+
     <div class="form-group">
         <label for="">Pays : </label>
-        {{ form_widget(form.country) }}
+        {{ form_widget(form.country)  }}
     </div>
 
     <div class="form-group">
         <label for="">Ville : </label>
-        {{ form_widget(form.city) }}
+        {{ form_widget(form.city, {'attr' : {'class' : 'typeahead', 'list' : 'citySelection'}, 'id' : 'city'}) }}
+        <datalist id='citySelection'>
+            
+        <datalist>
     </div>
 
-    <div class="form-group">
+    <div hidden class="form-group">
         <label for="">Code postal : </label>
-        {{ form_widget(form.postalCode) }}
+        {{ form_widget(form.postalCode,  {'attr' : {'list' : 'postalCodeSelection'}}) }}
+        <datalist id='postalCodeSelection'>
+            
+        <datalist>
+    </div>
+
+    <div hidden class="form-group">
+        {{ form_widget(form.gpsLat) }}
+    </div>
+
+    <div hidden class="form-group">
+        {{ form_widget(form.gpsLong) }}
     </div>
 
     <div class="form-group">
@@ -56,3 +89,12 @@
     {{ form_end(form) }}
 
 {% endblock body %}
+
+{% block javascripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="ajax.js"></script>
+    <!-- Include Google Maps JS API -->
+    <script type="text/javascript"  src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDaAqpZLH8wNn4pgCt_fCDJrWO9whYCW9E"></script>
+    {# <script type="text/javascript"  src="https://maps.googleapis.com/maps/api/geocode/json?address=places&key=AIzaSyDaAqpZLH8wNn4pgCt_fCDJrWO9whYCW9E"></script> #}
+    <script type="text/javascript" src="autocompletion.js"></script>
+{% endblock %}
