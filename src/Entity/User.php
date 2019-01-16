@@ -52,28 +52,6 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
-     */
-    private $country;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $postalCode;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
-     */
-    private $city;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $street;
-
-    /**
-     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Vous devez indiquer une adresse mail valide.")
      */
     private $email;
@@ -87,6 +65,46 @@ class User implements UserInterface
      * @ORM\Column(type="decimal", precision=9, scale=6)
      */
     private $gpsLong;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $address;
+
+    /**
+     * @ORM\Column(type="binary")
+     */
+    private $avatar;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $playerYouAre;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $PlayerYouSearch;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $PlayExclusivelyAtHome;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $MaxDistance;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $Active;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $description;
 
     public function getId(): ?int
     {
@@ -173,54 +191,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getCountry(): ?string
-    {
-        return $this->country;
-    }
-
-    public function setCountry(string $country): self
-    {
-        $this->country = $country;
-
-        return $this;
-    }
-
-    public function getPostalCode(): ?string
-    {
-        return $this->postalCode;
-    }
-
-    public function setPostalCode(string $postalCode): self
-    {
-        $this->postalCode = $postalCode;
-
-        return $this;
-    }
-
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    public function setCity(string $city): self
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    public function getStreet(): ?string
-    {
-        return $this->street;
-    }
-
-    public function setStreet(?string $street): self
-    {
-        $this->street = $street;
-
-        return $this;
-    }
-
     public function getEmail(): ?string
     {
         return $this->email;
@@ -253,6 +223,102 @@ class User implements UserInterface
     public function setGpsLong($gpsLong): self
     {
         $this->gpsLong = $gpsLong;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar($avatar): self
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getPlayerYouAre(): ?string
+    {
+        return $this->playerYouAre;
+    }
+
+    public function setPlayerYouAre(?string $playerYouAre): self
+    {
+        $this->playerYouAre = $playerYouAre;
+
+        return $this;
+    }
+
+    public function getPlayerYouSearch(): ?string
+    {
+        return $this->PlayerYouSearch;
+    }
+
+    public function setPlayerYouSearch(?string $PlayerYouSearch): self
+    {
+        $this->PlayerYouSearch = $PlayerYouSearch;
+
+        return $this;
+    }
+
+    public function getPlayExclusivelyAtHome(): ?bool
+    {
+        return $this->PlayExclusivelyAtHome;
+    }
+
+    public function setPlayExclusivelyAtHome(?bool $PlayExclusivelyAtHome): self
+    {
+        $this->PlayExclusivelyAtHome = $PlayExclusivelyAtHome;
+
+        return $this;
+    }
+
+    public function getMaxDistance(): ?int
+    {
+        return $this->MaxDistance;
+    }
+
+    public function setMaxDistance(?int $MaxDistance): self
+    {
+        $this->MaxDistance = $MaxDistance;
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->Active;
+    }
+
+    public function setActive(bool $Active): self
+    {
+        $this->Active = $Active;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

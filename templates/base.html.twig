@@ -4,30 +4,35 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-        <link rel="stylesheet" href="style.css">
         <link href="https://fonts.googleapis.com/css?family=Rock+Salt" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+
         <title>{% block title %}{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
     </head>
-    <body>
-        <header class="background-color1 container-fluid">
+    <body>   
+        <header class="background-color1 card-header">
             <div class="row" id="header-row">
-                <div class="dropdown">
+                <div class="dropdown" id='dropdown-left'>
                     <button class="btn dropdown-toggle background-color1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-bars color2 background-color1" id='hamburger'></i>
                     </button>
                     <div class="dropdown-menu background-color1" aria-labelledby="dropdownMenuButton">
                         <div class="user-menu">
                             <a class="dropdown-item color2" href="#"><i class="fas fa-home"></i> Accueil</a>
+                            {% if is_granted('ROLE_USER') %}
                             <a class="dropdown-item color2" href="#"><i class="fas fa-keyboard"></i> Tchat</a>
                             <a class="dropdown-item color2" href="#"><i class="fas fa-address-card"></i> Profil</a>
+                            {% endif %}
                         </div>
+                        {% if is_granted('ROLE_ADMIN') %}
                         <div class="admin-menu">
                             <a class="dropdown-item color2" href="#"><i class="fas fa-chart-line"></i> Indicateurs</a>
                             <a class="dropdown-item color2" href="#"><i class="fas fa-user-circle"></i> Gérer les utilisateurs</a>
                             <a class="dropdown-item color2" href="#"><i class="fas fa-exclamation-triangle"></i> Gérer les signalements</a> 
                         </div>
+                        {% endif %}
 
                     </div>
                 </div>
@@ -43,15 +48,31 @@
                         <h1 id="site-title" class="color2">Réseau Rôliste</h1>
                     </div> 
                 </div>
-                <div class='color2' id="connect">
-                    <a href="">Se connecter</a> 
+
+                {% if app.user %}
+                <div class='color2 dropdown' id='dropdown-right'>
+                    <button class="btn dropdown-toggle background-color1 color2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{app.user.username}}
+                    </button>
+                    <div class="dropdown-menu background-color1" id="right-menu" aria-labelledby="dropdownMenuButton">
+                        <div class="user-menu">
+                            <a class="dropdown-item color2" href="#"><i class="fas fa-address-card"></i> Profil</a>
+                            <a class="dropdown-item color2" href="{{path('app_logout')}}"><i class="fas fa-sign-out-alt"></i> Se déconnecter</a>
+                        </div>
+
+                    </div>
                 </div>
+                {% elseif not app.user %}
+                <div class='color2' id="connect">
+                    <a href="{{path('app_login')}}">Se connecter</a> 
+                </div>
+                {% endif %}
             </div>
             
         </header>
         {% block body %}{% endblock %}
 
-        <footer class="container-fluid background-color1">
+        <footer class="background-color1 card-footer">
             <div class="color2 row" id="footer-row">
                 Ce site a été créé par Aymeric Filliot
             </div>
